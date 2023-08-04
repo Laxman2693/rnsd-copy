@@ -33,6 +33,7 @@ import useDrawHook from './useDrawHook';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:"grey"
   },
   drawZone: {
     alignContent: 'center',
@@ -125,6 +126,7 @@ const drawNewItem = (
   }
 ) => {
   'worklet';
+  const defaultStrokeWidth = style?.strokeWidth.value<8 ? 8 : style?.strokeWidth.value
   if (currentItem.value) {
     runOnJS(addDoneItem)(currentItem.value);
   }
@@ -139,7 +141,7 @@ const drawNewItem = (
           rx: 0,
           ry: 0,
         },
-        strokeWidth: style.strokeWidth.value,
+        strokeWidth: defaultStrokeWidth,
         color: style.color.value,
       };
       break;
@@ -147,7 +149,7 @@ const drawNewItem = (
       currentItem.value = {
         type: mode.value,
         data: { x: position.x, y: position.y, width: 0, height: 0 },
-        strokeWidth: style.strokeWidth.value,
+        strokeWidth: defaultStrokeWidth,
         color: style.color.value,
       };
       break;
@@ -161,7 +163,7 @@ const drawNewItem = (
           x2: position.x,
           y2: position.y,
         },
-        strokeWidth: style.strokeWidth.value,
+        strokeWidth: defaultStrokeWidth,
         color: style.color.value,
       };
       break;
@@ -174,7 +176,7 @@ const drawNewItem = (
           width: 200,
           height: style.textBaseHeight.value || 0,
         },
-        strokeWidth: style.strokeWidth.value,
+        strokeWidth: defaultStrokeWidth,
         text: DEFAULT_TEXT,
         color: style.color.value,
       };
@@ -183,7 +185,7 @@ const drawNewItem = (
       currentItem.value = {
         type: mode.value,
         data: [],
-        strokeWidth: style.strokeWidth.value,
+        strokeWidth: defaultStrokeWidth,
         color: style.color.value,
       };
       break;
@@ -1116,15 +1118,15 @@ const DrawCore = ({
         if (ratioImageHeight < drawRegion.height) {
           setImageSize({
             width: drawRegion.width,
-            height: ratioImageHeight,
+            height: drawRegion.height,
           });
         } else {
           setImageSize({
             height: drawRegion.height,
-            width:
-              Math.round(
-                ((imageWidth * drawRegion.height) / imageHeight) * 100
-              ) / 100,
+            width:drawRegion.width
+              // Math.round(
+              //   ((imageWidth * drawRegion.height) / imageHeight) * 100
+              // ) / 100,
           });
         }
       }
@@ -1174,7 +1176,7 @@ const DrawCore = ({
       <View
         style={[
           styles.drawZone,
-          { backgroundColor: backgroundColor ?? 'none' },
+          { backgroundColor: "backgroundColor" ?? 'none' },
         ]}
         onLayout={(event) => {
           setDrawRegion({
@@ -1183,9 +1185,9 @@ const DrawCore = ({
           });
         }}
       >
-        <PanGestureHandler onGestureEvent={onGestureEvent}>
+        <PanGestureHandler onGestureEvent={onGestureEvent} >
           <Animated.View style={imageSize || drawRegion}>
-            <View ref={drawContainer}>
+            <View ref={drawContainer} >
               {image ? (
                 imageSize && originalImageSize ? (
                   <ViewShot
@@ -1195,6 +1197,10 @@ const DrawCore = ({
                       quality: 1,
                     }}
                     style={imageSize}
+                    // style={{
+                    //   width:"100%",
+                    //   height:470,
+                    // }}
                   >
                     <ImageBackground source={image} style={styles.bgImage}>
                       <DrawPad

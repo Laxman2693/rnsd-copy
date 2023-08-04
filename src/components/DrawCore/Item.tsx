@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { G, Line, Ellipse, Rect, Path, ForeignObject } from 'react-native-svg';
 import type { DrawItem } from '../../types';
 import { pointsToPath } from './CurrentAnimatedItem';
@@ -8,8 +8,9 @@ const styles = StyleSheet.create({
   textZone: {
     paddingHorizontal: 10,
   },
+  
   textContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: 'transparent',
     borderRadius: 10,
     paddingVertical: 13,
     paddingHorizontal: 18,
@@ -85,7 +86,7 @@ export default function Item({
     case 'text':
       return (
         <G onPress={onPress}>
-          <Rect {...item.data} onPress={onPress} />
+          {/* <Rect {...item.data} onPress={onPress} /> */}
           <ForeignObject
             x={item.data.x}
             y={item.data.y}

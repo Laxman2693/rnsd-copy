@@ -11,7 +11,7 @@ function SvgComponent(props: SvgProps) {
         />
       </Defs>
       <G fill="none" fillRule="evenodd">
-        <Mask id="prefix__b" fill="#fff">
+        <Mask id="prefix__b" fill="black">
           <Use xlinkHref="#prefix__a" />
         </Mask>
         <Use fill="#000" fillRule="nonzero" xlinkHref="#prefix__a" />

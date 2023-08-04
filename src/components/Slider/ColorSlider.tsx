@@ -1,6 +1,6 @@
 import { sliderStyle, TRACK_R } from './sliderStyle';
 import React, { useCallback } from 'react';
-import { LayoutChangeEvent, View, ViewProps } from 'react-native';
+import { LayoutChangeEvent, Pressable, Text, View, ViewProps } from 'react-native';
 
 import {
   PanGestureHandler,
@@ -15,19 +15,25 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { LinearGradientType } from '../../types';
 import useDrawHook from '../DrawCore/useDrawHook';
+import { Modal } from 'react-native-paper';
 
+// const gradientColors = [
+//   'hsl(0, 100%, 100%) 00%',
+//   'hsl(0, 100%, 50%) 10%',
+//   'hsl(45, 100%, 50%) 20%',
+//   'hsl(90, 100%, 50%) 30%',
+//   'hsl(135, 100%, 50%) 40%',
+//   'hsl(180, 100%, 50%) 50%',
+//   'hsl(225, 100%, 50%) 60%',
+//   'hsl(270, 100%, 50%) 70%',
+//   'hsl(315, 100%, 50%) 80%',
+//   'hsl(360, 100%, 50%) 90%',
+//   'hsl(0, 100%, 0%) 100%  ',
+// ];
 const gradientColors = [
-  'hsl(0, 100%, 100%) 00%',
-  'hsl(0, 100%, 50%) 10%',
-  'hsl(45, 100%, 50%) 20%',
-  'hsl(90, 100%, 50%) 30%',
-  'hsl(135, 100%, 50%) 40%',
-  'hsl(180, 100%, 50%) 50%',
-  'hsl(225, 100%, 50%) 60%',
-  'hsl(270, 100%, 50%) 70%',
-  'hsl(315, 100%, 50%) 80%',
-  'hsl(360, 100%, 50%) 90%',
-  'hsl(0, 100%, 0%) 100%  ',
+  '#000000', '#343a40', '#495057', '#c92a2a', '#a61e4d', '#862e9c', 
+      '#5f3dc4', '#364fc7', '#1864ab', '#0b7285', '#087f5b', '#2b8a3e', '#5c940d', 
+      '#e67700', '#d9480f'
 ];
 
 const gradientStart = { x: 0, y: 0 };
@@ -48,6 +54,7 @@ const ColorSlider = ({
     const lum = res ? parseFloat(res[3] ?? '0') : 0;
 
     const tint = res ? parseFloat(res[1] ?? '0') : 0;
+
 
     if (lum > 50) {
       return ((sliderWidth.value * 0.1) / 50) * (100 - lum);
@@ -80,28 +87,30 @@ const ColorSlider = ({
         ctx.startX = x;
       },
       onActive: ({ translationX }, { startX }) => {
+        console.log(translationX, startX);
         const slidePos = Math.min(sliderWidth.value, startX + translationX);
+        // color!.value = `hsl(0, 100%, 50%) 10%`
+        // if (slidePos < 0.1 * sliderWidth.value) {
+        //   color!.value = `hsl(0, 100%, ${Math.min(
+        //     100,
+        //     100 - (slidePos / (0.1 * sliderWidth.value)) * 50
+        //   ).toFixed(10)}%)`;
+        // } else if (slidePos > 0.9 * sliderWidth.value) {
 
-        if (slidePos < 0.1 * sliderWidth.value) {
-          color!.value = `hsl(0, 100%, ${Math.min(
-            100,
-            100 - (slidePos / (0.1 * sliderWidth.value)) * 50
-          ).toFixed(10)}%)`;
-        } else if (slidePos > 0.9 * sliderWidth.value) {
-          color!.value = `hsl(0, 100%, ${Math.max(
-            50 -
-              ((slidePos - 0.9 * sliderWidth.value) /
-                (0.1 * sliderWidth.value)) *
-                50,
-            0
-          ).toFixed(10)}%)`;
-        } else {
-          color!.value = `hsl(${
-            ((slidePos - sliderWidth.value * 0.1) /
-              (sliderWidth.value - sliderWidth.value * 0.2)) *
-            360
-          }, 100%, 50%)`;
-        }
+        //   color!.value = `hsl(0, 100%, ${Math.max(
+        //     50 -
+        //       ((slidePos - 0.9 * sliderWidth.value) /
+        //         (0.1 * sliderWidth.value)) *
+        //         50,
+        //     0
+        //   ).toFixed(10)}%)`;
+        // } else {
+        //   color!.value = `hsl(${
+        //     ((slidePos - sliderWidth.value * 0.1) /
+        //       (sliderWidth.value - sliderWidth.value * 0.2)) *
+        //     360
+        //   }, 100%, 50%)`;
+        // }
       },
       onEnd: () => {
         runOnJS(wrapperOnColorChange)();
@@ -110,6 +119,7 @@ const ColorSlider = ({
     []
   );
 
+ 
   const style = useAnimatedStyle(() => {
     return {
       transform: [{ translateX: position.value - TRACK_R }],
@@ -123,6 +133,11 @@ const ColorSlider = ({
     [sliderWidth]
   );
 
+  const handleColorPress=(selectedColor)=>{
+    console.log("color", selectedColor)
+    color!.value=  'hsl(315, 100%, 50%) 80%'
+  }
+
   return (
     <View style={sliderStyle.container}>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
@@ -134,7 +149,7 @@ const ColorSlider = ({
             onLayout={onLayout}
             style={sliderStyle.track}
           />
-          <Animated.View style={[sliderStyle.thumb, style]} />
+          <Animated.View style={[sliderStyle.thumb, style]} />         
         </Animated.View>
       </PanGestureHandler>
     </View>

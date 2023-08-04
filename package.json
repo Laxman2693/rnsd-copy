@@ -1,5 +1,5 @@
 {
-  "name": "@archireport/rnsd-copy",
+  "name": "@archireport/react-native-svg-draw",
   "version": "2.2.1",
   "description": "React Native drawing component based on SVG with editable annotations",
   "main": "lib/commonjs/index",
@@ -41,13 +41,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/Laxman2693/rnsd-copy",
-  "author": "Mickael Lecoq <mickael@lecoq.me> (https://github.com/Laxman2693)",
+  "repository": "https://github.com/ArchireportTeam/react-native-svg-draw",
+  "author": "Mickael Lecoq <mickael@lecoq.me> (https://github.com/ArchireportTeam)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Laxman2693/rnsd-copy/issues"
+    "url": "https://github.com/ArchireportTeam/react-native-svg-draw/issues"
   },
-  "homepage": "https://github.com/Laxman2693/rnsd-copy#readme",
+  "homepage": "https://github.com/ArchireportTeam/react-native-svg-draw#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "public": true

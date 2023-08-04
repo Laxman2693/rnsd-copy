@@ -214,7 +214,7 @@ export default function CurrentAnimatedItem({
       const coordinates =
         currentItem.value?.type === 'doubleHead'
           ? currentItem.value.data
-          : { x1: -10, y1: -10, x2: -10, y2: -10 };
+          : { x1: -10, y1: -10 };
 
       return {
         x1: coordinates.x1,

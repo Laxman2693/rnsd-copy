@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   sliderBackground: {
-    maxHeight: 15,
+    maxHeight: 15,   
+     
   },
 });
 
@@ -35,7 +36,6 @@ const StrokeSlider = ({
   maxValue: number;
 }) => {
   const { onColorStrokeChange, strokeWidth } = useDrawHook();
-
   const sliderWidth = useSharedValue(0);
 
   const position = useDerivedValue(() => {
@@ -92,7 +92,10 @@ const StrokeSlider = ({
             <SliderSvg
               color="grey"
               preserveAspectRatio="none"
-              style={styles.sliderBackground}
+              style={{ width: '100%',
+              backgroundColor: 'grey',
+              maxHeight: 5,
+              borderRadius: 3,}}
             />
           </View>
           <Animated.View style={[sliderStyle.thumb, style]} />
